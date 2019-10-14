@@ -170,13 +170,18 @@ private:
 	
 	void buildBuToKMuMu(const edm::Event &);
 	
+	//<2.3 Trigger> L xy ( μ + μ − − vtx ) > 3: the significance of the separation between dimuon vertex and beamspot in the transverse plane;
 	void computeLS (double, double, double, double, double, double, double,
 	                double, double, double, double, double, double, double,
 						 double, double, double, double, double*, double*);
+	
+	//<2.3 Trigger> cos(α xy ) > 0.9: angle in the transverse plane between the dimuon momentum and the separation between the dimuon vertex and the beamspot.
 	void computeCosAlpha (double, double, double, double, double,
 	                      double, double, double, double, double,
 								 double, double, double, double, double, 
 								 double, double, double, double*, double*);
+	
+	//
 	void computeCosAlpha2D(double, double, double, double, double,     
 	                       double, double, double, double, double,
 								  double, double, double, double, double, 
