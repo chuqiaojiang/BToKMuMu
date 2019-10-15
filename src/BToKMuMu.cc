@@ -199,27 +199,46 @@ private:
 	                                   const reco::TransientTrack,
 												  double&, double &, double &);
 	
+	//<2.3 Trigger> DCA xy < 2 cm: Distance of Closest Approach between the muon momentum and the beamspot in the transverse plane;
 	bool hasGoodMuonDcaBs (const reco::TransientTrack, double &, double &);
+	
+	//<3.1.4 The Selections of the Hadron Track> DCA hxy /σ > 3.3: DCA hxy is the Distance of Closest Approach between the hadron momentum and the beamspot in the transverse plane and σ is its uncertainty;
+	//函数hasGoodTrackDcaBs的implementation似乎有点问题：TrkMinDcaSigBs_在btokmumu_2012_cfi.py的默认设置值是0.1而不是3.3？
 	bool hasGoodTrackDcaBs (const reco::TransientTrack, double &, double &);
+	
+	//没见哪里有用到这个函数
 	bool hasGoodTrackDcaPoint (const reco::TransientTrack, const GlobalPoint,
 	                                 double, double &, double &);
+	
+	//没见哪里有用到这个函数,除了注释掉的地方
 	bool hasGoodKChargedMass(RefCountedKinematicTree, double &);
+
+	//函数hasGoodBuMass的implementation似乎有点问题：btokmumu_2012_cfi.py设置的B_mass范围是[2.0,8.0]；而<3 Offline Event Selections> 3. Narrowing the B invariant mass region to [5.10, 5.60] GeV; 
 	bool hasGoodBuMass(RefCountedKinematicTree, double &);
+	
+	//函数hasGoodBuVertex的implementation似乎有点问题：BMinVtxCl在btokmumu_2012_cfi.py的默认设置值是0.01而不是<3.1.5 Selection of B Mesons> 的CL ( B − vtx ) > 12%: B vertex confidence level;
 	bool hasGoodBuVertex(const reco::TrackRef, const reco::TrackRef, const reco::TrackRef,
 	                           double &, double &, RefCountedKinematicTree &);
+	
 	bool hasGoodMuMuVertex (const reco::TransientTrack, const reco::TransientTrack,
 	                              reco::TransientTrack &, reco::TransientTrack &,
 									double &, double &, double &, double &, double &,
 									double &, double &, double &);
+	
 	bool hasGoodKaonTrack(const edm::Event&, const pat::GenericParticle, double &);
+	
 	bool hasPrimaryVertex(const edm::Event &);
 	
 	void hltReport(const edm::Event&);
 	
 	bool isGenKCharged(const reco::Candidate *);
+	
 	bool isGenMuonP(const reco::Candidate *);
+	
 	bool matchMuonTrack (const edm::Event&, const reco::TrackRef);
+	
 	bool matchMuonTracks (const edm::Event&, const vector<reco::TrackRef>);
+	
 	bool matchPrimaryVertexTracks ();
 	
 	void saveBuToKMuMu(RefCountedKinematicTree);
@@ -842,7 +861,9 @@ BToKMuMu::buildBuToKMuMu(const edm::Event& iEvent)
   double MuMuCosAlphaBS, MuMuCosAlphaBSErr;
   //double K_mass
   double kaon_trk_pt, b_vtx_chisq, b_vtx_cl, b_mass;
-  double DCAKaonTrkBS, DCAKaonTrkBSErr;                      
+  double DCAKaonTrkBS, DCAKaonTrkBSErr;
+	
+//由hasGoodBuVertex来赋值
   RefCountedKinematicTree vertexFitTree;
 
   // ---------------------------------
@@ -1394,7 +1415,10 @@ BToKMuMu::hasGoodBuVertex(const reco::TrackRef mu1Track,
   vertexFitTree = fitter.fit(vFitMCParticles);
   if (!vertexFitTree->isValid()) return false;
 
+//？为什么要movePointerToTheTop()
   vertexFitTree->movePointerToTheTop();
+	
+	
   RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
   if ( !bDecayVertexMC->vertexIsValid()) return false;
  
@@ -1407,6 +1431,9 @@ BToKMuMu::hasGoodBuVertex(const reco::TrackRef mu1Track,
   b_vtx_cl = ChiSquaredProbability((double)(b_KV->chiSquared()),
                                  (double)(b_KV->degreesOfFreedom()));
 
+	
+	
+//？<3.1.5 Selection of B Mesons>中的selection是CL ( B − vtx ) > 12%: B vertex confidence level;而btokmumu_2012_cfi.py中BMinVtxCl = cms.untracked.double(0.01)
   if ( b_vtx_cl < BMinVtxCl_ ) return false;
   
   return true;
