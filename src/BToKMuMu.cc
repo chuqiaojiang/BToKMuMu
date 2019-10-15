@@ -220,11 +220,13 @@ private:
 	bool hasGoodBuVertex(const reco::TrackRef, const reco::TrackRef, const reco::TrackRef,
 	                           double &, double &, RefCountedKinematicTree &);
 	
+	//<3.1.1 Selections Matching the Trigger> the dimuon χ 2 vertex probability greater than 10%.
 	bool hasGoodMuMuVertex (const reco::TransientTrack, const reco::TransientTrack,
 	                              reco::TransientTrack &, reco::TransientTrack &,
 									double &, double &, double &, double &, double &,
 									double &, double &, double &);
 	
+	//
 	bool hasGoodKaonTrack(const edm::Event&, const pat::GenericParticle, double &);
 	
 	bool hasPrimaryVertex(const edm::Event &);
