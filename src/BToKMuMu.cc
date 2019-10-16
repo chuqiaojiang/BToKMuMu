@@ -187,7 +187,10 @@ private:
 								  double, double, double, double, double, 
 								  double, double, double, double*, double*);
 	
+	//似乎是用来计算固有衰变时间的？
 	void computeCtau(RefCountedKinematicTree, double &, double &);
+	
+	
 	double computeEta (double, double, double);
 	double computePhi (double, double, double);
 	double computeEtaPhiDistance (double, double, double, double, double, double);
@@ -226,7 +229,7 @@ private:
 									double &, double &, double &, double &, double &,
 									double &, double &, double &);
 	
-	//
+	//函数hasGoodKaonTrack的implementation似乎有点问题：BMinVtxCl在btokmumu_2012_cfi.py的默认设置值是0.2而不是<3.1.4 The Selections of the Hadron Track> 的phT > 1.3 GeV/c: hadron transverse momentum;
 	bool hasGoodKaonTrack(const edm::Event&, const pat::GenericParticle, double &);
 	
 	bool hasPrimaryVertex(const edm::Event &);
