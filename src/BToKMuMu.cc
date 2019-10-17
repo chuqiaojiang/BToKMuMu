@@ -197,9 +197,7 @@ private:
 	void clearVariables();
 	
 	
-	
 	bool hasBeamSpot(const edm::Event&);
-	
 	
 	//<3.1.2 Soft Muon Identification> distance of closest approach between the muon momentum and the primary vertex along the beam line < 20 cm;
 	//函数hasGoodClosestApproachTrackss的implementation似乎有点问题：MuMuMaxDca_在btokmumu_2012_cfi.py的默认设置值是0.5cm而不是20cm？
@@ -240,18 +238,24 @@ private:
 	//保证每个event存在初级顶点
 	bool hasPrimaryVertex(const edm::Event &);
 	
-	
+//保存trigger的name和prescale
 	void hltReport(const edm::Event&);
 	
+//判断pdgid
 	bool isGenKCharged(const reco::Candidate *);
-	
+
+//判断pdgid
 	bool isGenMuonP(const reco::Candidate *);
 	
+//判断每个event中是否有与reco::TrackRef这个形参匹配的track
 	bool matchMuonTrack (const edm::Event&, const reco::TrackRef);
 	
+//判断每个event中是否有与vector<reco::TrackRef>这个形参中的track匹配的track
 	bool matchMuonTracks (const edm::Event&, const vector<reco::TrackRef>);
 	
+//？不知道用来做什么的？
 	bool matchPrimaryVertexTracks ();
+	
 	
 	void saveBuToKMuMu(RefCountedKinematicTree);
 	void saveBuVertex(RefCountedKinematicTree);
