@@ -196,8 +196,13 @@ private:
 	double computeEtaPhiDistance (double, double, double, double, double, double);
 	void clearVariables();
 	
+	
+	
 	bool hasBeamSpot(const edm::Event&);
 	
+	
+	//<3.1.2 Soft Muon Identification> distance of closest approach between the muon momentum and the primary vertex along the beam line < 20 cm;
+	//函数hasGoodClosestApproachTrackss的implementation似乎有点问题：MuMuMaxDca_在btokmumu_2012_cfi.py的默认设置值是0.5cm而不是20cm？
 	bool hasGoodClosestApproachTracks (const reco::TransientTrack,
 	                                   const reco::TransientTrack,
 												  double&, double &, double &);
@@ -232,7 +237,9 @@ private:
 	//函数hasGoodKaonTrack的implementation似乎有点问题：BMinVtxCl在btokmumu_2012_cfi.py的默认设置值是0.2而不是<3.1.4 The Selections of the Hadron Track> 的phT > 1.3 GeV/c: hadron transverse momentum;
 	bool hasGoodKaonTrack(const edm::Event&, const pat::GenericParticle, double &);
 	
+	//保证每个event存在初级顶点
 	bool hasPrimaryVertex(const edm::Event &);
+	
 	
 	void hltReport(const edm::Event&);
 	
