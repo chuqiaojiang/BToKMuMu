@@ -170,7 +170,7 @@ private:
 	
 	void buildBuToKMuMu(const edm::Event &);
 	
-	//<2.3 Trigger> L xy ( μ + μ − − vtx ) > 3: the significance of the separation between dimuon vertex and beamspot in the transverse plane;
+	//计算到beamspot的距离和误差
 	void computeLS (double, double, double, double, double, double, double,
 	                double, double, double, double, double, double, double,
 						 double, double, double, double, double*, double*);
