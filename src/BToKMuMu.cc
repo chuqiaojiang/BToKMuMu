@@ -1,3 +1,5 @@
+//这里应该只应用trigger的selection产生ntuple，之后再用/*BToKMuMu/plugins/CutASelection/SingleBuToKMuMuSelector.cc*/做AnalysisNote里的3.1.2之后的cut，即“Our basic cut flow is as following:”的内容
+
 // -*- C++ -*-
 //
 // Package: BToKMuMu
