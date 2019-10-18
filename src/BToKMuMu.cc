@@ -170,6 +170,8 @@ private:
 	virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
 	virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
 	
+	
+	//
 	void buildBuToKMuMu(const edm::Event &);
 	
 	//计算到beamspot的距离和误差，用于<2.3 Trigger> L xy ( μ + μ − − vtx ) > 3: the significance of the separation between dimuon vertex and beamspot in the transverse plane;
@@ -214,7 +216,7 @@ private:
 	//函数hasGoodTrackDcaBs的implementation似乎有点问题：TrkMinDcaSigBs_在btokmumu_2012_cfi.py的默认设置值是0.1而不是3.3？
 	bool hasGoodTrackDcaBs (const reco::TransientTrack, double &, double &);
 	
-	//没见哪里有用到这个函数
+	//没见哪里有用到这个函数,可能都是在用hasGoodTrackDcaBs()而没有用这个函数
 	bool hasGoodTrackDcaPoint (const reco::TransientTrack, const GlobalPoint,
 	                                 double, double &, double &);
 	
@@ -348,7 +350,8 @@ private:
 	vector<int>    *trkchg; // +1 for k+, -1 for k-
 	vector<double> *trkpx, *trkpy, *trkpz, *trkpt;
 	vector<double> *trkdcabs, *trkdcabserr;
-	// B+ and B-
+	
+	// 通过buildBuToKMuMu()得到的B+ and B-的数目
 	int nb;
 	vector<int>    *bchg; // +1 for b+, -1 for b-
 	vector<double> *bpx, *bpxerr, *bpy, *bpyerr, *bpz, *bpzerr, *bmass, *bmasserr;
@@ -890,8 +893,11 @@ BToKMuMu::buildBuToKMuMu(const edm::Event& iEvent)
   for (vector<pat::Muon>::const_iterator iMuonM = patMuonHandle->begin();
        iMuonM != patMuonHandle->end(); iMuonM++){
     
+	  
+//？？？
     reco::TrackRef muTrackm = iMuonM->innerTrack();
     if ( muTrackm.isNull() ) continue;
+	  
 
     histos[h_mupt]->Fill(muTrackm->pt());
     histos[h_mueta]->Fill(muTrackm->eta());
