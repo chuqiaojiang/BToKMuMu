@@ -170,7 +170,7 @@ private:
 	
 	void buildBuToKMuMu(const edm::Event &);
 	
-	//计算到beamspot的距离和误差
+	//计算到beamspot的距离和误差，用于<2.3 Trigger> L xy ( μ + μ − − vtx ) > 3: the significance of the separation between dimuon vertex and beamspot in the transverse plane;
 	void computeLS (double, double, double, double, double, double, double,
 	                double, double, double, double, double, double, double,
 						 double, double, double, double, double*, double*);
@@ -293,9 +293,9 @@ private:
 	bool   KeepGENOnly_;
 	double TruthMatchMuonMaxR_;
 	double TruthMatchKaonMaxR_;
-	// pre-selection cuts
-	double MuonMinPt_; 
-	double MuonMaxEta_;
+	// pre-selection cuts， //之后的是AN的理论值
+	double MuonMinPt_;  //<3.1.1 Selections Matching the Trigger> single muon p T greater than 3.5 GeV/c;
+	double MuonMaxEta_; //
 	double MuonMaxDcaBs_;
 	double TrkMinPt_;
 	double TrkMinDcaSigBs_;
