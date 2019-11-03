@@ -156,10 +156,10 @@ process.ntuple = cms.EDAnalyzer(
     BuMass = cms.untracked.double(5.27925),
 
    # labels
-    GenParticlesLabel = cms.InputTag("genParticles"),
+    GenParticlesLabel = cms.InputTag("prunedGenParticles"),
     TriggerResultsLabel = cms.InputTag("TriggerResults","", 'HLT'),
     BeamSpotLabel = cms.InputTag('offlineBeamSpot'),
-    VertexLabel = cms.InputTag('offlinePrimaryVertices'),
+    VertexLabel = cms.InputTag('offlineSlimmedPrimaryVertices'),
     MuonLabel = cms.InputTag('slimmedMuons'),
     #KshortLabel = cms.InputTag('generalV0Candidates:Kshort'),
     #KshortLabel = cms.InputTag('localV0Candidates:Kshort'),
