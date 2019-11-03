@@ -46,9 +46,10 @@ process.load('Configuration.Geometry.GeometryIdeal_cff')
 
 process.load("PhysicsTools.PatAlgos.patSequences_cff")
 
-# add track candidates
 # 注释20191103
 """
+# add track candidates
+
 from PhysicsTools.PatAlgos.tools.trackTools import *
 makeTrackCandidates(process,
                     label        = 'TrackCands',                  
@@ -147,14 +148,14 @@ process.ntuple = cms.EDAnalyzer(
     MuonMass = cms.untracked.double(0.10565837), 
     MuonMassErr = cms.untracked.double(3.5*1e-9), 
     KaonMass = cms.untracked.double(0.493677),
-	 KaonMassErr = cms.untracked.double(1.6*1e-5),
+    KaonMassErr = cms.untracked.double(1.6*1e-5),
    # PionMass = cms.untracked.double(0.13957018), 
    # PionMassErr = cms.untracked.double(0.13957018*1e-6),
-    #KshortMass = cms.untracked.double(0.497614), 
+   # KshortMass = cms.untracked.double(0.497614), 
    # KshortMassErr = cms.untracked.double(0.000024),
     BuMass = cms.untracked.double(5.27925),
 
-    # labels
+   # labels
     GenParticlesLabel = cms.InputTag("genParticles"),
     TriggerResultsLabel = cms.InputTag("TriggerResults","", 'HLT'),
     BeamSpotLabel = cms.InputTag('offlineBeamSpot'),
@@ -170,7 +171,7 @@ process.ntuple = cms.EDAnalyzer(
     # gen particle 
     IsMonteCarlo = cms.untracked.bool(False),
     KeepGENOnly  = cms.untracked.bool(False),
-	 TruthMatchMuonMaxR = cms.untracked.double(0.004), # [eta-phi]
+    TruthMatchMuonMaxR = cms.untracked.double(0.004), # [eta-phi]
     TruthMatchKaonMaxR = cms.untracked.double(0.3), # [eta-phi]
    # TruthMatchKsMaxVtx = cms.untracked.double(10.0), 
 
@@ -204,7 +205,8 @@ process.ntuple = cms.EDAnalyzer(
 
 )
 
-
+# 注释20191103
+"""
 # Remove not used from PAT 
 process.patDefaultSequence.remove(process.patJetCorrFactors)
 process.patDefaultSequence.remove(process.patJetCharge)
@@ -223,3 +225,6 @@ process.patDefaultSequence.remove(process.countPatJets)
 
 #process.p = cms.Path(process.patDefaultSequence * process.localV0Candidates * process.ntuple)
 process.p = cms.Path(process.patDefaultSequence * process.ntuple)
+'''
+## 添加20191103
+process.p = cms.Path(process.ntuple)
