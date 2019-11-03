@@ -39,7 +39,7 @@ process.MessageLogger = cms.Service(
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 process.load('Configuration.StandardSequences.MagneticField_cff')
-process.load('Configuration.StandardSequences.GeometryExtended_cff')
+#注释20191103	process.load('Configuration.StandardSequences.GeometryExtended_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.load('Configuration.Geometry.GeometryIdeal_cff')
@@ -47,6 +47,8 @@ process.load('Configuration.Geometry.GeometryIdeal_cff')
 process.load("PhysicsTools.PatAlgos.patSequences_cff")
 
 # add track candidates
+# 注释20191103
+"""
 from PhysicsTools.PatAlgos.tools.trackTools import *
 makeTrackCandidates(process,
                     label        = 'TrackCands',                  
@@ -141,8 +143,10 @@ process.localV0Candidates = cms.EDProducer(
     #innerHitPosCut = cms.double(4.)
     innerHitPosCut = cms.double(-1)
 )
-
+"""
  
+	
+	
 process.ntuple = cms.EDAnalyzer(
     'BToKMuMu',
     OutputFileName = cms.string("BToKMuMu.root"),
