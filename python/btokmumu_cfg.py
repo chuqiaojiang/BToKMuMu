@@ -5,10 +5,15 @@ from btokmumu_cfi import process
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
-                            fileNames = cms.untracked.vstring('          @@@@@@@@@@                ')
+                            fileNames = cms.untracked.vstring(
+                              '/store/mc/RunIIFall17MiniAODv2/BdToKstarMuMu_BMuonFilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PU2017_12Apr2018_N1_94X_mc2017_realistic_v14-v1/90000/8AE50B00-3F42-E811-A6D5-842B2B76653D.root'
+                              #'/store/data/Run2017B/DoubleMuonLowMass/MINIAOD/22Jun2017-v1/00000/D6F6E300-7658-E711-8D1A-002590791D6A.root'                                
+                                                              )
                             )
 
-process.GlobalTag.globaltag = cms.string('        @@@@@@@@@          ')
+process.GlobalTag.globaltag = cms.string('94X_mc2017_realistic_v14'
+                                        #'94X_dataRun2_ReReco_EOY17_v6'
+                                        )
 
 
 
