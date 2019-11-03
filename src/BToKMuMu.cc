@@ -870,7 +870,7 @@ BToKMuMu::buildBuToKMuMu(const edm::Event& iEvent)
   iEvent.getByLabel(MuonLabel_, patMuonHandle);
   if( patMuonHandle->size() < 2 ) return ;
 
-  edm::Handle< vector<pat::GenericParticle> >thePATTrackHandle;
+  edm::Handle< vector<pat::PackedCandidate> >thePATTrackHandle;
   iEvent.getByLabel(TrackLabel_, thePATTrackHandle);
 
   bool passed;
