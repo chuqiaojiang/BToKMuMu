@@ -237,7 +237,7 @@ private:
 									double &, double &, double &);
 	
 	//函数hasGoodKaonTrack的implementation似乎有点问题：BMinVtxCl在btokmumu_2012_cfi.py的默认设置值是0.2而不是<3.1.4 The Selections of the Hadron Track> 的phT > 1.3 GeV/c: hadron transverse momentum;
-	bool hasGoodKaonTrack(const edm::Event&, const pat::GenericParticle, double &);
+	bool hasGoodKaonTrack(const edm::Event&, const pat::PackedCandidate, double &);
 	
 	//保证每个event存在初级顶点
 	bool hasPrimaryVertex(const edm::Event &);
@@ -843,7 +843,7 @@ BToKMuMu::hasPrimaryVertex(const edm::Event& iEvent)
 
 bool
 BToKMuMu::hasGoodKaonTrack(const edm::Event& iEvent,
-                         const pat::GenericParticle iTrack,
+                         const pat::PackedCandidate iTrack,
                          double & kaon_trk_pt)
 {
    reco::TrackRef theTrackRef = iTrack.track();
@@ -894,7 +894,7 @@ BToKMuMu::buildBuToKMuMu(const edm::Event& iEvent)
        iMuonM != patMuonHandle->end(); iMuonM++){
     
 	  
-//？？？
+//？？？what is innerTrack
     reco::TrackRef muTrackm = iMuonM->innerTrack();
     if ( muTrackm.isNull() ) continue;
 	  
@@ -964,7 +964,7 @@ BToKMuMu::buildBuToKMuMu(const edm::Event& iEvent)
         // ---------------------------------
         // loop 3: Kaon track
         // ---------------------------------
-        for ( vector<pat::GenericParticle>::const_iterator iTrack
+        for ( vector<pat::PackedCandidate>::const_iterator iTrack
                 = thePATTrackHandle->begin();
          iTrack != thePATTrackHandle->end(); ++iTrack ) {
 
