@@ -370,10 +370,10 @@ private:
 	bool isGenMuonP(const reco::Candidate *);
 	
 //判断每个event中是否有与reco::TrackRef这个形参匹配的track
-	bool matchMuonTrack (const edm::Event&, const reco::Track);
+	bool matchMuonTrack (const edm::Event&, const reco::TrackRef);
 	
 //判断每个event中是否有与vector<reco::TrackRef>这个形参中的track匹配的track
-	bool matchMuonTracks (const edm::Event&, const vector<reco::Track>);
+	bool matchMuonTracks (const edm::Event&, const vector<reco::TrackRef>);
 	
 //？不知道用来做什么的？
 	bool matchPrimaryVertexTracks ();
@@ -1471,7 +1471,7 @@ BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
 
 bool
 BToKMuMu::matchMuonTracks (const edm::Event& iEvent,
-                         const vector<reco::Track> theTracks)
+                         const vector<reco::TrackRef> theTracks)
 {
   reco::Track theTrackRef;
   for(unsigned int j = 0; j < theTracks.size(); ++j) {
