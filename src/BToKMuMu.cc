@@ -1,3 +1,121 @@
+// system include files
+#include <memory>
+
+// user include files
+
+#include "FWCore/Framework/interface/Frameworkfwd.h"
+#include "FWCore/Framework/interface/EDAnalyzer.h"
+#include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/MakerMacros.h"
+
+#include "FWCore/ParameterSet/interface/ParameterSet.h"
+#include "FWCore/Framework/interface/EventSetup.h"
+#include "FWCore/Framework/interface/ESHandle.h"
+#include "DataFormats/Common/interface/Handle.h"
+
+#include "SimDataFormats/GeneratorProducts/interface/HepMCProduct.h"
+
+#include "RecoVertex/KinematicFit/interface/KinematicParticleVertexFitter.h"
+#include "RecoVertex/KinematicFit/interface/KinematicParticleFitter.h"
+#include "RecoVertex/KinematicFit/interface/MassKinematicConstraint.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticle.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/RefCountedKinematicParticle.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/TransientTrackKinematicParticle.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticleFactoryFromTransientTrack.h"
+#include "RecoVertex/AdaptiveVertexFit/interface/AdaptiveVertexFitter.h"
+
+#include "TrackingTools/Records/interface/TrackingComponentsRecord.h"
+
+#include "TrackingTools/TransientTrack/interface/TransientTrackFromFTSFactory.h"
+#include "TrackingTools/TransientTrack/interface/TransientTrack.h"
+#include "TrackingTools/PatternTools/interface/ClosestApproachInRPhi.h"
+
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/VertexReco/interface/Vertex.h"
+#include "DataFormats/VertexReco/interface/VertexFwd.h"
+
+#include "DataFormats/PatCandidates/interface/PackedCandidate.h" // muy importante para MiniAOD
+
+#include "DataFormats/Candidate/interface/Candidate.h"
+#include "DataFormats/Candidate/interface/CandidateFwd.h"
+#include "DataFormats/Candidate/interface/CompositeCandidate.h"
+#include "DataFormats/Candidate/interface/VertexCompositeCandidate.h"
+#include "DataFormats/V0Candidate/interface/V0Candidate.h"
+#include "DataFormats/RecoCandidate/interface/RecoChargedCandidate.h"
+
+#include "CondFormats/L1TObjects/interface/L1GtTriggerMenu.h"
+#include "CondFormats/DataRecord/interface/L1GtTriggerMenuRcd.h"
+#include "DataFormats/L1GlobalTrigger/interface/L1GlobalTriggerReadoutSetupFwd.h"
+#include "DataFormats/L1GlobalTrigger/interface/L1GlobalTriggerObjectMapRecord.h"
+#include "DataFormats/L1GlobalTrigger/interface/L1GlobalTriggerReadoutSetup.h"
+#include "DataFormats/L1GlobalTrigger/interface/L1GlobalTriggerReadoutRecord.h"
+
+#include "DataFormats/PatCandidates/interface/Muon.h"
+#include "DataFormats/MuonReco/interface/Muon.h"
+#include "DataFormats/MuonReco/interface/MuonFwd.h"
+#include "DataFormats/HepMCCandidate/interface/GenParticle.h"
+#include "DataFormats/PatCandidates/interface/GenericParticle.h"
+
+#include "RecoVertex/VertexPrimitives/interface/BasicSingleVertexState.h"
+#include "RecoVertex/VertexPrimitives/interface/VertexState.h"
+
+#include "TFile.h"
+#include "TTree.h"
+
+//=================================================
+// Original author:  Jhovanny Andres Mejia        |
+//         created:  Fryday Sep 23                |
+//         <jhovanny.andres.mejia.guisao@cern.ch> | 
+//=================================================
+
+// system include files
+#include <memory>
+
+
+// user include files
+
+#include "FWCore/Framework/interface/Frameworkfwd.h"
+#include "FWCore/Framework/interface/EDAnalyzer.h"
+#include "FWCore/Framework/interface/Event.h"
+#include "FWCore/Framework/interface/MakerMacros.h"
+#include "FWCore/ParameterSet/interface/ParameterSet.h"
+#include "FWCore/ServiceRegistry/interface/Service.h"
+
+#include "DataFormats/PatCandidates/interface/CompositeCandidate.h"
+#include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
+#include "DataFormats/Candidate/interface/Candidate.h"
+#include "DataFormats/HepMCCandidate/interface/GenParticleFwd.h"
+//#include "DataFormats/VertexReco/interface/VertexFwd.h"
+#include "DataFormats/BeamSpot/interface/BeamSpot.h"
+#include "DataFormats/PatCandidates/interface/Muon.h"
+#include "DataFormats/Common/interface/TriggerResults.h"
+
+//For kinematic fit:
+#include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
+#include "TrackingTools/Records/interface/TransientTrackRecord.h"
+#include "TrackingTools/TransientTrack/interface/TransientTrack.h"
+#include "MagneticField/Engine/interface/MagneticField.h"            
+#include "CommonTools/Statistics/interface/ChiSquaredProbability.h"
+
+#include "RecoVertex/KinematicFit/interface/KinematicParticleVertexFitter.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticleFactoryFromTransientTrack.h"
+#include "RecoVertex/KinematicFit/interface/MassKinematicConstraint.h"
+#include "RecoVertex/KinematicFit/interface/KinematicParticleFitter.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/MultiTrackKinematicConstraint.h"
+#include "RecoVertex/KinematicFit/interface/KinematicConstrainedVertexFitter.h"
+#include "RecoVertex/KinematicFit/interface/TwoTrackMassKinematicConstraint.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticle.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/RefCountedKinematicParticle.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/TransientTrackKinematicParticle.h"
+
+
+#include "FWCore/Common/interface/TriggerNames.h"
+#include "CommonTools/UtilAlgos/interface/TFileService.h"
+#include "TLorentzVector.h"
+#include "TTree.h"
+#include "TH2F.h"
+
+
 //这里应该只应用trigger的selection产生ntuple，之后再用/*BToKMuMu/plugins/CutASelection/SingleBuToKMuMuSelector.cc*/做AnalysisNote里的3.1.2之后的cut，即“Our basic cut flow is as following:”的内容
 
 // -*- C++ -*-
