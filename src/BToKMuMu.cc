@@ -1448,7 +1448,7 @@ BToKMuMu::hasGoodMuMuVertex (const reco::TransientTrack muTrackpTT,
 
 bool
 BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
-                         const reco::Track theTrackRef)
+                         const reco::TrackRef theTrackRef)
 {
   if ( &(theTrackRef) == NULL ) return false;
 
@@ -1462,7 +1462,7 @@ BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
     muTrackRef = iMuon->innerTrack();
     if ( muTrackRef.isNull() ) continue;
 
-    if (muTrackRef == &theTrackRef) return true;
+    if (muTrackRef == theTrackRef) return true;
   }
   
   return false;
