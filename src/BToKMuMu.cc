@@ -1471,9 +1471,9 @@ BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
 
 bool
 BToKMuMu::matchMuonTracks (const edm::Event& iEvent,
-                         const vector<reco::TrackRef> theTracks)
+                         const vector<reco::Track> theTracks)
 {
-  reco::TrackRef theTrackRef;
+  reco::Track theTrackRef;
   for(unsigned int j = 0; j < theTracks.size(); ++j) {
     theTrackRef = theTracks[j];
     if ( matchMuonTrack(iEvent, theTrackRef) ) return true;
