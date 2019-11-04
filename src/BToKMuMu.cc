@@ -964,7 +964,7 @@ BToKMuMu::hasGoodKaonTrack(const edm::Event& iEvent,
                          const pat::PackedCandidate iTrack,
                          double & kaon_trk_pt)
 {
-   reco::Track* theTrackRef = &(iTrack.pseudoTrack());
+   const reco::Track* theTrackRef = &(iTrack.pseudoTrack());
    if ( theTrackRef == NULL ) return false;
 
    // veto muon tracks
