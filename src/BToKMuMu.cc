@@ -345,7 +345,7 @@ private:
 	bool hasGoodBuMass(RefCountedKinematicTree, double &);
 	
 	//函数hasGoodBuVertex的implementation似乎有点问题：BMinVtxCl在btokmumu_2012_cfi.py的默认设置值是0.01而不是<3.1.5 Selection of B Mesons> 的CL ( B − vtx ) > 12%: B vertex confidence level;
-	bool hasGoodBuVertex(const reco::TrackRef, const reco::TrackRef, const reco::Track,
+	bool hasGoodBuVertex(const reco::TrackRef, const reco::TrackRef, const reco::TrackRef,
 	                           double &, double &, RefCountedKinematicTree &);
 	
 	//<3.1.1 Selections Matching the Trigger> the dimuon χ 2 vertex probability greater than 10%.
@@ -964,16 +964,16 @@ BToKMuMu::hasGoodKaonTrack(const edm::Event& iEvent,
                          const pat::PackedCandidate iTrack,
                          double & kaon_trk_pt)
 {
-   reco::Track *theTrackRef = &(iTrack.pseudoTrack());
-   if ( theTrackRef == Null ) return false;
+   reco::TrackRef theTrackRef = iTrack.pseudoTrack();
+   if ( &(theTrackRef) == Null ) return false;
 
    // veto muon tracks
    if ( matchMuonTrack(iEvent, theTrackRef) ) return false;
    
    // check the track kinematics
-   kaon_trk_pt = theTrackRef->pt();
+   kaon_trk_pt = theTrackRef.pt();
 
-   if ( theTrackRef->pt() < TrkMinPt_ ) return false;
+   if ( theTrackRef.pt() < TrkMinPt_ ) return false;
 
    return true;
 }
@@ -1092,7 +1092,7 @@ BToKMuMu::buildBuToKMuMu(const edm::Event& iEvent)
         
 
          // compute track DCA to beam spot
-         reco::Track kaonTrack = iTrack->pseudoTrack();
+         reco::TrackRef kaonTrack = iTrack->pseudoTrack();
          const reco::TransientTrack theTrackTT(kaonTrack, &(*bFieldHandle_));
 		  passed = hasGoodTrackDcaBs(theTrackTT, DCAKaonTrkBS, DCAKaonTrkBSErr);        
 		  histos[h_trkdcasigbs]->Fill(DCAKaonTrkBS/DCAKaonTrkBSErr);
@@ -1448,9 +1448,9 @@ BToKMuMu::hasGoodMuMuVertex (const reco::TransientTrack muTrackpTT,
 
 bool
 BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
-                         const reco::Track *theTrackRef)
+                         const reco::Track theTrackRef)
 {
-  if ( theTrackRef.isNull() ) return false;
+  if ( &(theTrackRef) == Null ) return false;
 
   edm::Handle< vector<pat::Muon> > thePATMuonHandle;
   iEvent.getByLabel(MuonLabel_, thePATMuonHandle);
@@ -1462,7 +1462,7 @@ BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
     muTrackRef = iMuon->innerTrack();
     if ( muTrackRef.isNull() ) continue;
 
-    if (muTrackRef == theTrackRef) return true;
+    if (muTrackRef == &theTrackRef) return true;
   }
   
   return false;
@@ -1471,7 +1471,7 @@ BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
 
 bool
 BToKMuMu::matchMuonTracks (const edm::Event& iEvent,
-                         const vector<reco::Track*> theTracks)
+                         const vector<reco::Track> theTracks)
 {
   reco::Track theTrackRef;
   for(unsigned int j = 0; j < theTracks.size(); ++j) {
@@ -1532,7 +1532,7 @@ BToKMuMu::hasGoodBuMass(RefCountedKinematicTree vertexFitTree,
 bool
 BToKMuMu::hasGoodBuVertex(const reco::TrackRef mu1Track,
                          const reco::TrackRef mu2Track,
-                         const reco::Track kaonTrack,
+                         const reco::TrackRef kaonTrack,
                          double & b_vtx_chisq, double & b_vtx_cl,
                          RefCountedKinematicTree &vertexFitTree)
 {
