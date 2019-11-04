@@ -964,7 +964,7 @@ BToKMuMu::hasGoodKaonTrack(const edm::Event& iEvent,
                          const pat::PackedCandidate iTrack,
                          double & kaon_trk_pt)
 {
-   reco::TrackRef theTrackRef = iTrack.pseudoTrack();
+   reco::TrackRef theTrackRef = (&(iTrack.pseudoTrack()));
    if ( theTrackRef.isNull() ) return false;
 
    // veto muon tracks
@@ -1092,7 +1092,7 @@ BToKMuMu::buildBuToKMuMu(const edm::Event& iEvent)
         
 
          // compute track DCA to beam spot
-         reco::TrackRef kaonTrack = iTrack->pseudoTrack();
+         reco::TrackRef kaonTrack = (&(iTrack->pseudoTrack()));
          const reco::TransientTrack theTrackTT(kaonTrack, &(*bFieldHandle_));
 		  passed = hasGoodTrackDcaBs(theTrackTT, DCAKaonTrkBS, DCAKaonTrkBSErr);        
 		  histos[h_trkdcasigbs]->Fill(DCAKaonTrkBS/DCAKaonTrkBSErr);
