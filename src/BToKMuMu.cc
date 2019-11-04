@@ -345,7 +345,7 @@ private:
 	bool hasGoodBuMass(RefCountedKinematicTree, double &);
 	
 	//函数hasGoodBuVertex的implementation似乎有点问题：BMinVtxCl在btokmumu_2012_cfi.py的默认设置值是0.01而不是<3.1.5 Selection of B Mesons> 的CL ( B − vtx ) > 12%: B vertex confidence level;
-	bool hasGoodBuVertex(const reco::TrackRef, const reco::TrackRef, const reco::TrackRef,
+	bool hasGoodBuVertex(const reco::TrackRef, const reco::TrackRef, const reco::Track,
 	                           double &, double &, RefCountedKinematicTree &);
 	
 	//<3.1.1 Selections Matching the Trigger> the dimuon χ 2 vertex probability greater than 10%.
@@ -964,8 +964,8 @@ BToKMuMu::hasGoodKaonTrack(const edm::Event& iEvent,
                          const pat::PackedCandidate iTrack,
                          double & kaon_trk_pt)
 {
-   reco::TrackRef theTrackRef = iTrack.pseudoTrack();
-   if ( &(theTrackRef) == Null ) return false;
+   reco::Track theTrackRef = iTrack.pseudoTrack();
+   if ( &(theTrackRef) == NULL ) return false;
 
    // veto muon tracks
    if ( matchMuonTrack(iEvent, theTrackRef) ) return false;
@@ -1092,7 +1092,7 @@ BToKMuMu::buildBuToKMuMu(const edm::Event& iEvent)
         
 
          // compute track DCA to beam spot
-         reco::TrackRef kaonTrack = iTrack->pseudoTrack();
+         reco::Track kaonTrack = iTrack->pseudoTrack();
          const reco::TransientTrack theTrackTT(kaonTrack, &(*bFieldHandle_));
 		  passed = hasGoodTrackDcaBs(theTrackTT, DCAKaonTrkBS, DCAKaonTrkBSErr);        
 		  histos[h_trkdcasigbs]->Fill(DCAKaonTrkBS/DCAKaonTrkBSErr);
@@ -1450,7 +1450,7 @@ bool
 BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
                          const reco::Track theTrackRef)
 {
-  if ( &(theTrackRef) == Null ) return false;
+  if ( &(theTrackRef) == NULL ) return false;
 
   edm::Handle< vector<pat::Muon> > thePATMuonHandle;
   iEvent.getByLabel(MuonLabel_, thePATMuonHandle);
@@ -1532,7 +1532,7 @@ BToKMuMu::hasGoodBuMass(RefCountedKinematicTree vertexFitTree,
 bool
 BToKMuMu::hasGoodBuVertex(const reco::TrackRef mu1Track,
                          const reco::TrackRef mu2Track,
-                         const reco::TrackRef kaonTrack,
+                         const reco::Track kaonTrack,
                          double & b_vtx_chisq, double & b_vtx_cl,
                          RefCountedKinematicTree &vertexFitTree)
 {
