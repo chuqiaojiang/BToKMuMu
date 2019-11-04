@@ -1,3 +1,16 @@
+/////编译成功后又加的一些头文件
+#include "DataFormats/MuonReco/interface/Muon.h"
+#include "DataFormats/MuonReco/interface/MuonFwd.h"
+#include "DataFormats/MuonReco/interface/MuonSelectors.h"
+#include "DataFormats/MuonReco/interface/MuonMETCorrectionData.h"
+#include "DataFormats/MuonReco/interface/MuonTimeExtra.h"
+
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/PatCandidates/interface/Lepton.h"
+#include "DataFormats/ParticleFlowCandidate/interface/IsolatedPFCandidateFwd.h"
+#include "DataFormats/ParticleFlowCandidate/interface/IsolatedPFCandidate.h"
+#include "DataFormats/MuonReco/interface/MuonSimInfo.h"
+
 // system include files
 #include <memory>
 
