@@ -39,14 +39,14 @@ process.MessageLogger = cms.Service(
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 process.load('Configuration.StandardSequences.MagneticField_cff')
-#注释20191103	process.load('Configuration.StandardSequences.GeometryExtended_cff')
+# comment 20191103	process.load('Configuration.StandardSequences.GeometryExtended_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.load('Configuration.Geometry.GeometryIdeal_cff')
 
 process.load("PhysicsTools.PatAlgos.patSequences_cff")
 
-# 注释20191103
+# comment 20191103
 """
 # add track candidates
 
@@ -205,7 +205,7 @@ process.ntuple = cms.EDAnalyzer(
 
 )
 
-# 注释20191103
+# comment 20191103
 """
 # Remove not used from PAT 
 process.patDefaultSequence.remove(process.patJetCorrFactors)
@@ -226,5 +226,5 @@ process.patDefaultSequence.remove(process.countPatJets)
 #process.p = cms.Path(process.patDefaultSequence * process.localV0Candidates * process.ntuple)
 process.p = cms.Path(process.patDefaultSequence * process.ntuple)
 """
-## 添加20191103
+## add something 20191103
 process.p = cms.Path(process.ntuple)
