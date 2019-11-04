@@ -971,9 +971,9 @@ BToKMuMu::hasGoodKaonTrack(const edm::Event& iEvent,
    if ( matchMuonTrack(iEvent, theTrackRef) ) return false;
    
    // check the track kinematics
-   kaon_trk_pt = theTrackRef.pt();
+   kaon_trk_pt = theTrackRef->pt();
 
-   if ( theTrackRef.pt() < TrkMinPt_ ) return false;
+   if ( theTrackRef->pt() < TrkMinPt_ ) return false;
 
    return true;
 }
