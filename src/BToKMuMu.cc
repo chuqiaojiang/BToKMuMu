@@ -370,10 +370,10 @@ private:
 	bool isGenMuonP(const reco::Candidate *);
 	
 //判断每个event中是否有与reco::TrackRef这个形参匹配的track
-	bool matchMuonTrack (const edm::Event&, const reco::TrackRef);
+	bool matchMuonTrack (const edm::Event&, const reco::Track);
 	
 //判断每个event中是否有与vector<reco::TrackRef>这个形参中的track匹配的track
-	bool matchMuonTracks (const edm::Event&, const vector<reco::TrackRef>);
+	bool matchMuonTracks (const edm::Event&, const vector<reco::Track>);
 	
 //？不知道用来做什么的？
 	bool matchPrimaryVertexTracks ();
@@ -964,8 +964,8 @@ BToKMuMu::hasGoodKaonTrack(const edm::Event& iEvent,
                          const pat::PackedCandidate iTrack,
                          double & kaon_trk_pt)
 {
-   reco::Track theTrackRef = iTrack.pseudoTrack();
-   if ( theTrackRef.isNull() ) return false;
+   reco::Track* theTrackRef = &(iTrack.pseudoTrack());
+   if ( theTrackRef == NULL ) return false;
 
    // veto muon tracks
    if ( matchMuonTrack(iEvent, theTrackRef) ) return false;
@@ -1450,7 +1450,7 @@ bool
 BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
                          const reco::Track theTrackRef)
 {
-  if ( theTrackRef.isNull() ) return false;
+  if ( &(theTrackRef) == NULL ) return false;
 
   edm::Handle< vector<pat::Muon> > thePATMuonHandle;
   iEvent.getByLabel(MuonLabel_, thePATMuonHandle);
@@ -1462,7 +1462,7 @@ BToKMuMu::matchMuonTrack (const edm::Event& iEvent,
     muTrackRef = iMuon->innerTrack();
     if ( muTrackRef.isNull() ) continue;
 
-    if (muTrackRef == theTrackRef) return true;
+    if ( (muTrackRef.get()) == &(theTrackRef) ) return true;
   }
   
   return false;
