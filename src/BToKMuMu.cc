@@ -1552,9 +1552,9 @@ BToKMuMu::hasGoodBuVertex(const reco::TrackRef mu1Track,
 
   // do vertex fit for Bu
   KinematicParticleFactoryFromTransientTrack pFactory;
-  reco::TransientTrack mu1TT(mu1Track, &(*bFieldHandle_) );
-  reco::TransientTrack mu2TT(mu2Track, &(*bFieldHandle_) );
-  reco::TransientTrack kaonTT(kaonTrack, &(*bFieldHandle_) );
+  reco::TransientTrack mu1TT((*theB).build(mu1Track));
+  reco::TransientTrack mu2TT((*theB).build(mu2Track));
+  reco::TransientTrack kaonTT((*theB).build(kaonTrack));
 
   float chi = 0.;
   float ndf = 0.;
