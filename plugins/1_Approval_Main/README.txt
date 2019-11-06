@@ -1,12 +1,20 @@
 Instructions for Plugins (run2012v0)
 
 lxplus6 environment:   
-	
+	/*
 	export VO_CMS_SW_DIR=/opt/exp_soft/cms
 	source /afs/cern.ch/sw/lcg/external/gcc/4.7/x86_64-slc6-gcc47-opt/setup.sh
 	version=5.34.14
 	source /afs/cern.ch/sw/lcg/app/releases/ROOT/${version}/x86_64-slc6-gcc47-opt/root/bin/thisroot.sh
+	*/
 
+new:
+
+export VO_CMS_SW_DIR=/opt/exp_soft/cms
+source /cvmfs/sft.cern.ch/lcg/external/gcc/4.7.2/x86_64-slc6-gcc47-opt/setup.sh
+version=5.34.19
+source /cvmfs/sft.cern.ch/lcg/app/releases/ROOT/${version}/x86_64-slc6-gcc47-opt/root/bin/thisroot.sh
+	
 Build:
 	
 	make
